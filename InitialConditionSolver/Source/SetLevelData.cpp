@@ -71,7 +71,7 @@ void set_initial_conditions(LevelData<FArrayBox> &a_multigrid_vars,
             // set phi according to user defined function
             multigrid_vars_box(iv, c_phi_0) =
                 my_phi_function(loc, a_params.phi_amplitude,
-                                a_params.phi_wavelength, a_params.domainLength);
+                                a_params.phi_mu, a_params.domainLength);
 
             // set Aij for spin and momentum according to BH params
             set_binary_bh_Aij(multigrid_vars_box, iv, loc, a_params);
@@ -314,7 +314,7 @@ inline Real get_m(const Real &phi_here, const PoissonParameters &a_params,
     // For now rho is just the gradient term which is kept separate
     // ... may want to add V(phi) and phidot/Pi here later though
     Real Pi_field = 0.0;
-    Real V_of_phi = 0.0;
+    Real V_of_phi = 0.5 * a_params.phi_mu * a_params.phi_mu * phi_here * phi_here;
     Real rho = 0.5 * Pi_field * Pi_field + V_of_phi;
 
     return (2.0 / 3.0) * (constant_K * constant_K) -

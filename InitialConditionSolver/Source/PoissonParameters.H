@@ -18,6 +18,7 @@ using std::cerr;
 #include "DisjointBoxLayout.H"
 #include "FArrayBox.H"
 #include "ParmParse.H"
+// #include "GRParmParse.hpp"
 #include "VariableCoeffPoissonOperator.H"
 
 /// Class for solver input parameters
@@ -48,15 +49,16 @@ class PoissonParameters
     Real beta;
     Real G_Newton;
     Real phi_amplitude;
-    Real phi_wavelength;
+    Real phi_mu;
     Real bh1_bare_mass;
     Real bh2_bare_mass;
     Real bh1_spin;
     Real bh2_spin;
-    Real bh1_momentum;
-    Real bh2_momentum;
-    Real bh1_offset;
-    Real bh2_offset;
+    RealVect bh1_momentum;
+    RealVect bh2_momentum;
+    RealVect bh1_offset;
+    RealVect bh2_offset;
+    string filename;
 };
 
 /// get stuff from input file
