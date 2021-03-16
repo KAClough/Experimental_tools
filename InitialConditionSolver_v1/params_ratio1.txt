@@ -33,7 +33,11 @@ buffer_size  = 3
 # Setup multigrid params
 numMGsmooth = 4 # number of GSRB smooths before and after MG coarsening
 #preCondSolverDepth = 1
+<<<<<<< HEAD
 num_mg     = 1 
+=======
+num_mg     = 1
+>>>>>>> 66bb4a175d41f76e01ba32cdd368057bfbd94b6c
 numMGIterations = 2 #this is the number of MG v-cycles in the preconditioner
 max_iterations = 100 #max number of solver iterations
 max_NL_iterations = 6 #non linear outside loop iterations
@@ -45,7 +49,11 @@ verbosity = 3 # higher number means more verbose output
 #coefficient_average_type = arithmetic
 coefficient_average_type = harmonic
 
+<<<<<<< HEAD
 # Boundary conditions for domain-boundary faces 
+=======
+# Boundary conditions for domain-boundary faces
+>>>>>>> 66bb4a175d41f76e01ba32cdd368057bfbd94b6c
 # 0 for non periodic, 1 for periodic (enforces same for all)
 is_periodic = 0
 # if not periodic, then what?
@@ -56,15 +64,45 @@ bc_hi       = 0 0 0
 # note bc_value probably 0 because it is applied to dpsi at boundary (not psi)
 bc_value = 0.0
 
+<<<<<<< HEAD
 # Q: "Simple, change the gravitational constant of the Universe"
 G_Newton = GVALUE
+=======
+# GRChombo boundary parameters:
+# if not periodic, then specify the boundary type
+# 0 = static, 1 = sommerfeld, 2 = reflective
+# (see BoundaryConditions.hpp for details)
+hi_boundary = 1 1 1
+lo_boundary = 1 1 1
+
+# if reflective boundaries selected, must set
+# parity of all vars (in order given by MultigridUserVariables.hpp)
+# 0 = even
+# 1,2,3 = odd x, y, z
+# 4,5,6 = odd xy, yz, xz
+vars_parity = 0             #psi
+              0 4 6 0 5 0   #Aij
+              0             #phi
+
+
+# Q: "Simple, change the gravitational constant of the Universe"
+<<<<<<< HEAD:InitialConditionSolver_with_ghosts/params.txt
+G_Newton = 1.0
+=======
+G_Newton = GVALUE
+>>>>>>> 66bb4a175d41f76e01ba32cdd368057bfbd94b6c:InitialConditionSolver_v1/params_ratio1.txt
+>>>>>>> 66bb4a175d41f76e01ba32cdd368057bfbd94b6c
 
 # scalar field input params
 phi_amplitude = 1.0
 phi_mu = MUVALUE
 
 # initial conditions for Binary BH spacetimes
+<<<<<<< HEAD
 # (can be with or without periodic BCs, 
+=======
+# (can be with or without periodic BCs,
+>>>>>>> 66bb4a175d41f76e01ba32cdd368057bfbd94b6c
 #  and in presence of scalar field)
 # if you don't want BHs just set masses to zero
 
