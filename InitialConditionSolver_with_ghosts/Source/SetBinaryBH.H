@@ -92,8 +92,7 @@ void set_binary_bh_Aij(FArrayBox &multigrid_vars_box, const IntVect &iv,
 }
 
 // returns the Brill-Lindquist (singular) part of psi
-Real get_psi_brill_lindquist(const RealVect &loc,
-                             const PoissonParameters &a_params)
+Real set_binary_bh_psi(const RealVect &loc, const PoissonParameters &a_params)
 {
     // the Bowen York params
     Real m1 = a_params.bh1_bare_mass;
@@ -106,7 +105,7 @@ Real get_psi_brill_lindquist(const RealVect &loc,
     RealVect loc_bh2 = loc;
     Real rbh2 = get_bh_radius(loc_bh2, a_params.bh2_offset);
 
-    return 0.5 * (m1 / rbh1 + m2 / rbh2);
+    return (m1 / rbh1 + m2 / rbh2);
 }
 
 #endif /* SETBINARYBH_HPP */
