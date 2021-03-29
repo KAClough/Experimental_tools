@@ -13,7 +13,8 @@ alpha = 1.0
 beta  = -1.0
 
 # filename_base
-filename_base = /cosma6/data/dp174/dc-bamb1/GRChombo_data/BinaryBHSF/RUNNAME_InitialConditionsFinal
+#filename_base = /cosma6/data/dp174/dc-bamb1/GRChombo_data/BinaryBHSF/RUNNAME_InitialConditionsFinal
+filename_base = /p/project/pra116/bamber1/BinaryBHScalarField/RUNNAME_InitialConditionsFinal
 
 # AMR grid params - grid length and number of cells by direction
 L = 512

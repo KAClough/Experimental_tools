@@ -22,7 +22,8 @@
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 
 application=Main_PoissonSolver3d.Linux.64.mpiicpc.ifort.OPT.MPI.OPENMPCC.PETSC.ex
-location=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver/
+#Main_PoissonSolver3d.Linux.64.mpiicpc.ifort.OPT.MPI.OPENMPCC.PETSC.ex
+location=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_with_ghosts/
 
 srun ${location}${application} params.txt
 

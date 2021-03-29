@@ -2,7 +2,7 @@
 #
 # this copy is for the Skylake nodes
 
-work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver
+work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_with_ghosts
 
 L=512
 N1=64
@@ -31,7 +31,8 @@ run_list=(
 for run in "${run_list[@]}"
 do
   	cd $work_dir
-	# extract parameters                                                                                                                                                                      
+	# extract parameters
+        
         val="$run[0]"; mu="${!val}"
         val="$run[1]"; delay="${!val}"
         val="$run[2]"; dt_mult="${!val}"
