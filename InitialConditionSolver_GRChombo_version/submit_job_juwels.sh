@@ -2,7 +2,7 @@
 #
 # this copy is for the Skylake nodes
 
-work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_with_ghosts
+work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_GRChombo_version
 
 L=512
 N1=64
@@ -15,6 +15,7 @@ data_directory=/p/project/pra116/bamber1/BinaryBHScalarField
 
 # list for each is: mu, delay, dt, G, BH mass ratio, l, m, Al
 
+run_basic=(0 0 0 0 1 0 0 0) # default params from the public code
 run_test=(0.5 0 0.25 0 1 0 0 0)
 run0018=(0.5 0 0.25 0.000001 1 0 0 0)
 run0023=(0.5 0 0.25 0.0000000001 1 0 0 0) # G = 10^{-10}
@@ -25,7 +26,7 @@ run0028=(0.5 0 0.25 0.00000001 1 0 0 0) # G = 10^{-8}
 run0029=(1 0 0.0625 0.0000000001 1 0 0 0) # G = 10^{-10}
 
 run_list=(
-    run_test
+    run_basic
 )
 
 for run in "${run_list[@]}"
@@ -49,7 +50,8 @@ do
            subdir=${run}_mu${mu}_delay${delay}_G${G}_ratio${ratio}_l${l}_m${m}_Al${Al}
         fi
 
-	name=${subdir}_initial_conditions
+	#name=${subdir}_initial_conditions
+	name=basic_public_code_params
 	
         echo ${name} "initial conditions"
         new_dir_path=/p/scratch/pra116/bamber1/Initial_Conditions_Solver/${name}
@@ -57,7 +59,8 @@ do
 	mkdir -p ${new_dir_path}
         
        	cp slurm_submit_juwels ${new_dir_path}/slurm_submit
-	params_file=params_ratio${ratio}.txt
+	params_file=params.txt
+	#params_file=params_ratio${ratio}.txt
         cp ${params_file} ${new_dir_path}/params.txt
         
        	cd ${new_dir_path}

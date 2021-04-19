@@ -13,11 +13,11 @@ alpha = 1.0
 beta  = -1.0
 
 # filename_base
-filename_base = /p/project/pra116/bamber1/BinaryBHScalarField/run0023_InitialConditionsFinal
+filename_base = /p/project/pra116/bamber1/BinaryBHScalarField/RUNNAME_InitialConditionsFinal
 
 # AMR grid params - grid length and number of cells by direction
 L = 512
-N = 64 64 32
+N = 64 64 64
 # number of AMR refinement levels is max_level + 1
 max_level    = 9
 # Threshold for AMR refinement, based on magnitude of rhs
@@ -33,19 +33,17 @@ buffer_size  = 3
 # Setup multigrid params
 numMGsmooth = 4 # number of GSRB smooths before and after MG coarsening
 #preCondSolverDepth = 1
-num_mg     = 1
 numMGIterations = 2 #this is the number of MG v-cycles in the preconditioner
 max_iterations = 100 #max number of solver iterations
 max_NL_iterations = 6 #non linear outside loop iterations
 tolerance  = 1.0e-10  #solver tolerance for declaring convergence
 hang       = 1.0e-11  #solver tolerance for deciding when we're hung
-verbosity = 3 # higher number means more verbose output
+verbosity = 1 # higher number means more verbose output
 
 # how to average face-centered coefficients to coarser multigrid levels
 #coefficient_average_type = arithmetic
 coefficient_average_type = harmonic
 
-# Boundary conditions for domain-boundary faces
 # 0 for non periodic, 1 for periodic (enforces same for all)
 is_periodic = 0
 # if not periodic, then what?
@@ -74,15 +72,14 @@ vars_parity = 0             #psi
 
 
 # Q: "Simple, change the gravitational constant of the Universe"
-G_Newton = 1.0
-=======
-G_Newton = 0.0000000001
+G_Newton = GVALUE
 
 # scalar field input params
 phi_amplitude = 1.0
-phi_mu = 0.5
+phi_mu = MUVALUE
 
 # initial conditions for Binary BH spacetimes
+
 # (can be with or without periodic BCs,
 #  and in presence of scalar field)
 # if you don't want BHs just set masses to zero

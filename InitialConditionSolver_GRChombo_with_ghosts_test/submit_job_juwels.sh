@@ -2,7 +2,7 @@
 #
 # this copy is for the Skylake nodes
 
-work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_with_ghosts
+work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_GRChombo_with_ghosts_test
 
 L=512
 N1=64
@@ -23,16 +23,20 @@ run0026=(0.5 0 0.25 0.000000000000001 1 0 0 0) # G = 10^{-15}
 run0027=(0.5 0 0.25 0.00000000000000000001 1 0 0 0) # G = 10^{-20}
 run0028=(0.5 0 0.25 0.00000001 1 0 0 0) # G = 10^{-8}
 run0029=(1 0 0.0625 0.0000000001 1 0 0 0) # G = 10^{-10}
+run0031=(0.5 0 0.25 0.0000000000000000000000001 1 0 0 0) # G = 10^{-25}
+run0032=(0.5 0 0.25 0.000000000000000000000000000001 1 0 0 0) # G = 10^{-30}
+run0033=(0.5 0 0.25 0.000000001 1 0 0 0) # G = 10^{-9}
+run0034=(0.5 0 0.25 0.000000000001 1 0 0 0) # G = 10^{-12}
+run0035=(0.5 0 0.25 0.00000000000001 1 0 0 0) # G = 10^{-14}
 
 run_list=(
-    run_test
+    run0035
 )
 
 for run in "${run_list[@]}"
 do
   	cd $work_dir
-	# extract parameters
-        
+	# extract parameters                                                                                                                                                                      
         val="$run[0]"; mu="${!val}"
         val="$run[1]"; delay="${!val}"
         val="$run[2]"; dt_mult="${!val}"
@@ -49,16 +53,18 @@ do
            subdir=${run}_mu${mu}_delay${delay}_G${G}_ratio${ratio}_l${l}_m${m}_Al${Al}
         fi
 
-	name=${subdir}_initial_conditions
+	#name=${subdir}_initial_conditions
+	name=public_code_with_ghosts_${run}_no_Ham_Mom_vars
 	
         echo ${name} "initial conditions"
         new_dir_path=/p/scratch/pra116/bamber1/Initial_Conditions_Solver/${name}
         #
 	mkdir -p ${new_dir_path}
-        
+
        	cp slurm_submit_juwels ${new_dir_path}/slurm_submit
-	params_file=params_ratio${ratio}.txt
-        cp ${params_file} ${new_dir_path}/params.txt
+	#params_file=params_ratio${ratio}.txt
+	params_file=params_ratio1.txt
+	cp ${params_file} ${new_dir_path}/params.txt
         
        	cd ${new_dir_path}
         # add the location of the new directory to the params file

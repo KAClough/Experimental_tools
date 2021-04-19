@@ -1,0 +1,14 @@
+/cosma/home/dp174/dc-bamb1/.bashrc: line 16: bind: warning: line editing not enabled
+[?1034h/cosma/home/dp174/dc-bamb1/.bashrc: line 17: bind: warning: line editing not enabled
+[proxy:0:0@m6107.pri.cosma7.alces.network] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): execvp error on file /cosma/home/dp174/dc-bamb1/Experimental_tools/InitialConditionSolver_with_ghostsMain_PoissonSolver3d.Linux.64.mpiicpc.ifort.OPTHIGH.MPI.OPENMPCC.ex (No such file or directory)
+[proxy:0:0@m6107.pri.cosma7.alces.network] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): execvp error on file /cosma/home/dp174/dc-bamb1/Experimental_tools/InitialConditionSolver_with_ghostsMain_PoissonSolver3d.Linux.64.mpiicpc.ifort.OPTHIGH.MPI.OPENMPCC.ex (No such file or directory)
+[proxy:0:0@m6107.pri.cosma7.alces.network] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): execvp error on file /cosma/home/dp174/dc-bamb1/Experimental_tools/InitialConditionSolver_with_ghostsMain_PoissonSolver3d.Linux.64.mpiicpc.ifort.OPTHIGH.MPI.OPENMPCC.ex (No such file or directory)
+srun: error: m6109: task 0: Killed
+srun: Force Terminated job step 3035134.1
+srun: error: m6110: task 0: Killed
+srun: Force Terminated job step 3035134.0
+srun: error: m6108: task 0: Killed
+srun: Force Terminated job step 3035134.2
+[mpiexec@m6107.pri.cosma7.alces.network] wait_proxies_to_terminate (../../../../../src/pm/i_hydra/mpiexec/intel/i_mpiexec.c:389): downstream from host m6108 exited with status 137
+[mpiexec@m6107.pri.cosma7.alces.network] wait_proxies_to_terminate (../../../../../src/pm/i_hydra/mpiexec/intel/i_mpiexec.c:389): downstream from host m6109 exited with status 137
+[mpiexec@m6107.pri.cosma7.alces.network] wait_proxies_to_terminate (../../../../../src/pm/i_hydra/mpiexec/intel/i_mpiexec.c:389): downstream from host m6110 exited with status 137

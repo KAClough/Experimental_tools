@@ -2,7 +2,7 @@
 #
 # this copy is for the Skylake nodes
 
-work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_with_ghosts
+work_dir=/p/home/jusers/bamber1/juwels/Experimental_tools/InitialConditionSolver_GRChombo_version
 
 L=512
 N1=64
