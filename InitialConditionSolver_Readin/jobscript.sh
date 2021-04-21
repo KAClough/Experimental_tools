@@ -1,14 +1,14 @@
 #!/bin/bash -l
 #SBATCH -A dp174
 #SBATCH -p cosma6-pauper
-#SBATCH --nodes 1
+#SBATCH --nodes 2
 ### NB cosma6 has 16 cores per node so product of these = 16
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=4
 #SBATCH -o output_file.%J.out
 #SBATCH -e error_file.%J.err
-#SBATCH -t 2:00:00
-#SBATCH -J KC_ICs
+#SBATCH -t 0:8:00
+#SBATCH -J KC_ICs2
 #SBATCH --exclusive
 #SBATCH --mail-type=ALL                          # notifications for job done & fail
 #SBATCH --mail-user=katy.clough@physics.ox.ac.uk

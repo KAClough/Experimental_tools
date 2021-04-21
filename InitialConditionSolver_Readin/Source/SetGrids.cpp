@@ -95,8 +95,9 @@ int set_grids(Vector<DisjointBoxLayout> &vectGrids, PoissonParameters &a_params)
                                        a_params.coarsestDomain,
                                        a_params.num_ghosts);
 
+            bool set_grids = true;
             set_initial_conditions(*temp_multigrid_vars, *temp_dpsi,
-                                   grchombo_boundaries, dxLevel, a_params);
+                                   grchombo_boundaries, dxLevel, a_params, set_grids);
 
             // set condition for regrid - use the integrability condition
             // integral

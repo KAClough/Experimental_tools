@@ -42,7 +42,7 @@ void set_initial_conditions(LevelData<FArrayBox> &a_multigrid_vars,
                             LevelData<FArrayBox> &a_dpsi,
                             GRChomboBCs &a_grchombo_boundaries,
                             const RealVect &a_dx,
-                            const PoissonParameters &a_params)
+                            const PoissonParameters &a_params, bool set_grids)
 {
 
     CH_assert(a_multigrid_vars.nComp() == NUM_MULTIGRID_VARS);
@@ -57,7 +57,7 @@ void set_initial_conditions(LevelData<FArrayBox> &a_multigrid_vars,
         for (bit.begin(); bit.ok(); ++bit)
         {
             set_initial_multigrid_cell(multigrid_vars_box, dpsi_box,
-                bit(), a_dx, a_params);
+                bit(), a_dx, a_params, set_grids);
         }
 
         // now fill boundary ghost cells if using nonperiodic boundaries in
@@ -95,7 +95,7 @@ void set_initial_multigrid_cell(FArrayBox &a_multigrid_vars_box,
                                 FArrayBox &a_dpsi_box,
                                 const IntVect &a_iv,
                                 const RealVect &a_dx,
-                                const PoissonParameters &a_params)
+                                const PoissonParameters &a_params, bool set_grids)
 {
     RealVect loc;
     get_loc(loc, a_iv, a_dx, a_params);
@@ -107,6 +107,7 @@ void set_initial_multigrid_cell(FArrayBox &a_multigrid_vars_box,
     // as it already satisfies Laplacian(psi) = 0
     a_multigrid_vars_box(a_iv, c_psi) = 1.0;
     a_dpsi_box(a_iv, 0) = 0.0;
+    if(!set_grids) {a_multigrid_vars_box(a_iv, c_phi_0) = 0.0;}
 
     // set phi according to user defined function if not doing a read in
     // of source data

@@ -38,7 +38,7 @@ max_iterations = 100 #max number of solver iterations
 max_NL_iterations = 6 #non linear outside loop iterations
 tolerance  = 1.0e-10  #solver tolerance for declaring convergence
 hang       = 1.0e-11  #solver tolerance for deciding when we're hung
-verbosity = 2 # higher number means more verbose output
+verbosity = 4 # higher number means more verbose output
 
 # how to average face-centered coefficients to coarser multigrid levels
 #coefficient_average_type = arithmetic
@@ -76,7 +76,7 @@ G_Newton = 0.0000000001
 
 # scalar field input params - either read in from plotfile or analytic
 # function set in MyPhiFunction.H
-readin_source_data = 0
+readin_source_data = 1
 phi_amplitude = 1
 phi_mu = 1
 phi_wavelength = 1000

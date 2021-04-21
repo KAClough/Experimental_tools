@@ -33,13 +33,15 @@ extern void set_initial_conditions(LevelData<FArrayBox> &a_multigrid_vars,
                                    LevelData<FArrayBox> &a_dpsi,
                                    GRChomboBCs &a_grchombo_boundaries,
                                    const RealVect &a_dx,
-                                   const PoissonParameters &a_params);
+                                   const PoissonParameters &a_params,
+                                   bool set_grids = false);
 
 inline void set_initial_multigrid_cell(FArrayBox &a_multigrid_vars_box,
                                        FArrayBox &a_dpsi_box,
                                        const IntVect &a_iv,
                                        const RealVect &a_dx,
-                                       const PoissonParameters &a_params);
+                                       const PoissonParameters &a_params,
+                                       bool set_grids = false);
 
 extern void set_rhs(LevelData<FArrayBox> &a_rhs,
                     LevelData<FArrayBox> &a_multigrid_vars,

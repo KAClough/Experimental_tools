@@ -48,55 +48,72 @@ using std::cerr;
 /// This function outputs the variable data during the solver updates
 /// which helps to check convergence and debug
 void read_source_data(Vector<LevelData<FArrayBox> *> &a_multigrid_vars,
-                       const Vector<DisjointBoxLayout> &a_grids,
-                       const PoissonParameters &a_params)
+                      Vector<DisjointBoxLayout> &a_grids,
+                      const PoissonParameters &a_params, const bool read_grids = false)
 {
 #ifdef CH_USE_HDF5
 
 #if CH_SPACEDIM == 2
-    string fileName("InputSource.2d.hdf5");
+    string fileName("SourceData.2d.hdf5");
 #else
-    string fileName("InputSource.3d.hdf5");
+    string fileName("SourceData.3d.hdf5");
 #endif
 
-    // set names
-    Vector<string> variable_names; //(NUM_READIN_VARS);
-//    for (int icomp = 0; icomp < NUM_READIN_VARS; icomp++)
-//    {
-//        variable_names[icomp] =
-//            ReadinUserVariables::variable_names[icomp];
-//    }
-
     // set up a temp data structure for the source data
-    int max_level = a_multigrid_vars.size();
     Vector<LevelData<FArrayBox> *> temp_data; //(max_level, NULL);
+    Vector<string> variable_names; //(NUM_READIN_VARS);
+    int temp_num_levels;
+    Real dx, dt, time;
+    Box temp_domain_box;
+    Vector<int> temp_ref_ratio;
+
 //    for (int level = 0; level < max_level; level++)
 //    {
 //        temp_data[level] = new LevelData<FArrayBox>(a_grids[level], NUM_READIN_VARS);
 //    }
-    int temp_num_levels = 0;
-    Real dx, dt, time;
-    Vector<DisjointBoxLayout> temp_grids;
-    Box temp_domain_box;
-    Vector<int> temp_ref_ratio;
-    ReadAMRHierarchyHDF5(fileName, temp_grids, temp_data, variable_names,
+
+    if(read_grids)
+    {
+        // update directly the input grids
+        ReadAMRHierarchyHDF5(fileName, a_grids, temp_data, variable_names,
+                          temp_domain_box, dx, dt, time,
+                          temp_ref_ratio, temp_num_levels);
+    }
+    else
+    {
+        // set names
+//        Vector<string> variable_names(NUM_READIN_VARS);
+//        for (int icomp = 0; icomp < NUM_READIN_VARS; icomp++)
+//        {
+//            variable_names[icomp] =
+//                ReadinUserVariables::variable_names[icomp];
+//        }
+
+        Vector<DisjointBoxLayout> temp_grids;
+        // set up a temporary structure and then transfer data to multigrid_vars
+        ReadAMRHierarchyHDF5(fileName, temp_grids, temp_data, variable_names,
                           temp_domain_box, dx, dt, time,
                           temp_ref_ratio, temp_num_levels);
 
-    // check the read in data matches what we expect
-    CH_assert(temp_num_levels == max_level);
+        // check the read in data matches what we expect
+        int max_level_multigrid = a_multigrid_vars.size();
+        CH_assert(temp_num_levels == max_level_multigrid);
+        // TODO: add more checks
 
-    // assign values to the source vars in multigrid_vars
-    for (int level = 0; level < max_level; level++)
-    {
-        temp_data[level] = new LevelData<FArrayBox>(a_grids[level], NUM_READIN_VARS);
-        Interval sourceComps(c_phi, c_Pi);
-        temp_data[level]->copyTo(temp_data[level]->interval(), *a_multigrid_vars[level],
+        // assign values to the source vars in multigrid_vars
+        for (int level = 0; level < max_level_multigrid; level++)
+        {
+            pout() << "data copy on level: " << level<< endl;
+            temp_data[level] = new LevelData<FArrayBox>(a_grids[level], NUM_READIN_VARS);
+            Interval sourceComps(c_phi_0, c_Pi_0);
+            temp_data[level]->copyTo(temp_data[level]->interval(), *a_multigrid_vars[level],
                               sourceComps);
+        }
     }
 
+    int max_temp_level = temp_data.size();
     // clean up temporary storage
-    for (int level = 0; level < max_level; level++)
+    for (int level = 0; level < max_temp_level; level++)
     {
         delete temp_data[level];
         temp_data[level] = NULL;
