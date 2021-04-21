@@ -36,15 +36,23 @@ void getPoissonParameters(PoissonParameters &a_params)
 
     // Initial conditions for the scalar field
     pp.get("G_Newton", a_params.G_Newton);
+    pp.get("readin_source_data", a_params.readin_source_data);
     pp.get("phi_amplitude", a_params.phi_amplitude);
     pp.get("phi_wavelength", a_params.phi_wavelength);
+    pp.get("phi_mu", a_params.phi_mu);
 
-    if (abs(a_params.phi_amplitude) > 0.0)
+    if (!a_params.readin_source_data && (abs(a_params.phi_amplitude) > 0.0))
     {
         pout() << "Spacetime contains scalar field of amplitude "
                << a_params.phi_amplitude << endl;
     }
-
+    else if (a_params.readin_source_data)
+    {
+        pout() << "Reading in source data from file." << endl;
+        // TODO: If this is done the grids are also inherited, so
+        // one should amend below so these are set by the read in hdf5
+        // file and not user specified
+    }
     // Initial conditions for the black holes
     pp.get("bh1_bare_mass", a_params.bh1_bare_mass);
     pp.get("bh2_bare_mass", a_params.bh2_bare_mass);
@@ -178,7 +186,6 @@ void getPoissonParameters(PoissonParameters &a_params)
                 a_params.symmetric_boundaries_exist = true;
                 pp.getarr("vars_parity", vars_boundary_parity, 0,
                           NUM_MULTIGRID_VARS);
-
             }
         }
     }
@@ -196,6 +203,4 @@ void getPoissonParameters(PoissonParameters &a_params)
         GRChomboBCs::write_boundary_conditions(
             a_params.grchombo_boundary_params);
     }
-
-
 }

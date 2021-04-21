@@ -21,6 +21,7 @@
 #include "UsingNamespace.H"
 #include "VariableCoeffPoissonOperatorFactory.H"
 #include "WriteOutput.H"
+#include "ReadInput.H"
 #include "computeNorm.H"
 #include "computeSum.H"
 #include <iostream>
@@ -98,14 +99,23 @@ int poissonSolve(const Vector<DisjointBoxLayout> &a_grids,
                                    a_params.grchombo_boundary_params,
                                    a_params.coarsestDomain,
                                    a_params.num_ghosts);
+
         // set initial guess for psi and zero dpsi
         // and values for other multigrid sources - phi and Aij
+        // if not read in
         set_initial_conditions(*multigrid_vars[ilev], *dpsi[ilev],
                                grchombo_boundaries, vectDx[ilev], a_params);
 
         // prepare temp dx, domain vars for next level
         dxLev /= a_params.refRatio[ilev];
         domLev.refine(a_params.refRatio[ilev]);
+    }
+
+    // read in source data from hdf5 file if readin selected
+    if(a_params.readin_source_data)
+    {
+        pout() << "Reading in data for source in main" << endl;
+        read_source_data(multigrid_vars, a_grids, a_params);
     }
 
     // set up linear operator
@@ -310,7 +320,6 @@ int main(int argc, char *argv[])
             cerr << " usage " << argv[0] << " <input_file_name> " << endl;
             exit(0);
         }
-
         char *inFile = argv[1];
         ParmParse pp(argc - 2, argv + 2, NULL, inFile);
 
@@ -322,7 +331,17 @@ int main(int argc, char *argv[])
 
         // set up the grids, using the rhs for tagging to decide
         // where needs additional levels
-        set_grids(grids, params);
+        if(params.readin_source_data)
+        {
+            pout() << "Reading in data for grids" << endl;
+            const bool read_grids = true;
+            read_grid_data(grids, params);
+        }
+        else
+        {
+            pout() << "Set up grids using tagging by abs(Ham)" << endl;
+            set_grids(grids, params);
+        }
 
         // Solve the equations!
         status = poissonSolve(grids, params);

@@ -13,6 +13,7 @@ using std::cerr;
 #include "DisjointBoxLayout.H"
 #include "FArrayBox.H"
 #include "GRChomboUserVariables.hpp"
+#include "ReadinUserVariables.hpp"
 #include "MultigridUserVariables.hpp"
 #include "GRChomboBCs.hpp"
 #include "ParmParse.H"

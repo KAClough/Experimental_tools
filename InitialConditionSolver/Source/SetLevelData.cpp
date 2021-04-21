@@ -107,15 +107,23 @@ void set_initial_multigrid_cell(FArrayBox &a_multigrid_vars_box,
     // as it already satisfies Laplacian(psi) = 0
     a_multigrid_vars_box(a_iv, c_psi) = 1.0;
     a_dpsi_box(a_iv, 0) = 0.0;
+    a_multigrid_vars_box(a_iv, c_phi_0) = 0.0;
+    a_multigrid_vars_box(a_iv, c_Pi_0) = 0.0;
 
-    // set phi according to user defined function
-    a_multigrid_vars_box(a_iv, c_phi_0) = my_phi_function(
-        loc, a_params.phi_amplitude,
-        a_params.phi_wavelength, a_params.domainLength);
+    // set phi according to user defined function if not doing a read in
+    // of source data
+    if(!a_params.readin_source_data)
+    {
+        a_multigrid_vars_box(a_iv, c_phi_0) = my_phi_function(
+            loc, a_params.phi_amplitude,
+            a_params.phi_wavelength, a_params.domainLength);
+        a_multigrid_vars_box(a_iv, c_Pi_0) = 0.0;
+    }
 
     // set Aij for spin and momentum according to BH params
     set_binary_bh_Aij(a_multigrid_vars_box, a_iv, loc,
                       a_params);
+
 } //end set set_initial_multigrid_cell
 
 // set the rhs source for the poisson eqn
@@ -332,7 +340,8 @@ void set_m_value(Real &m, const Real &phi_here,
     // For now rho is just the gradient term which is kept separate
     // ... may want to add V(phi) and phidot/Pi here later though
     Real Pi_field = 0.0;
-    Real V_of_phi = 0.0;
+    Real V_of_phi = 0.5 * a_params.phi_mu * a_params.phi_mu * phi_here * phi_here;
+    // Real V_of_phi = 0.0;
     Real rho = 0.5 * Pi_field * Pi_field + V_of_phi;
 
     m = (2.0 / 3.0) * (constant_K * constant_K) -

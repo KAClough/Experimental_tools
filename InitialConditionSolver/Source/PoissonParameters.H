@@ -49,11 +49,13 @@ class PoissonParameters
     GRChomboBCs::params_t grchombo_boundary_params;
     bool symmetric_boundaries_exist;
     bool nonperiodic_boundaries_exist;
+    bool readin_source_data;
     Real alpha;
     Real beta;
     Real G_Newton;
     Real phi_amplitude;
-    Real phi_wavelength;
+    Real phi_mu;
+  Real phi_wavelength;
     Real bh1_bare_mass;
     Real bh2_bare_mass;
     Real bh1_spin;
