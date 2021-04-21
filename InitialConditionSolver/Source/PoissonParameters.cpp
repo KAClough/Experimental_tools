@@ -58,10 +58,14 @@ void getPoissonParameters(PoissonParameters &a_params)
     pp.get("bh2_bare_mass", a_params.bh2_bare_mass);
     pp.get("bh1_spin", a_params.bh1_spin);
     pp.get("bh2_spin", a_params.bh2_spin);
-    pp.get("bh1_offset", a_params.bh1_offset);
-    pp.get("bh2_offset", a_params.bh2_offset);
-    pp.get("bh1_momentum", a_params.bh1_momentum);
-    pp.get("bh2_momentum", a_params.bh2_momentum);
+    pp.get("bh1_offset_x", a_params.bh1_offset_x);
+    pp.get("bh1_offset_y", a_params.bh1_offset_y);
+    pp.get("bh2_offset_x", a_params.bh2_offset_x);
+    pp.get("bh2_offset_y", a_params.bh2_offset_y);
+    pp.get("bh1_momentum_x", a_params.bh1_momentum_x);
+    pp.get("bh1_momentum_y", a_params.bh1_momentum_y);
+    pp.get("bh2_momentum_x", a_params.bh2_momentum_x);
+    pp.get("bh2_momentum_y", a_params.bh2_momentum_y);
 
     if (abs(a_params.bh1_bare_mass) > 0.0 || abs(a_params.bh2_bare_mass) > 0.0)
     {

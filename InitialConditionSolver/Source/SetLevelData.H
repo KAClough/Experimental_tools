@@ -35,6 +35,12 @@ extern void set_initial_conditions(LevelData<FArrayBox> &a_multigrid_vars,
                                    const RealVect &a_dx,
                                    const PoissonParameters &a_params);
 
+inline Real get_laplacian_psi(const IntVect &a_iv, const FArrayBox &a_psi_fab,
+                              const RealVect &a_dx);
+
+inline Real get_grad_phi_sq(const IntVect &a_iv, const FArrayBox &a_phi_fab,
+                            const RealVect &a_dx);
+
 inline void set_initial_multigrid_cell(FArrayBox &a_multigrid_vars_box,
                                        FArrayBox &a_dpsi_box,
                                        const IntVect &a_iv,
@@ -56,7 +62,7 @@ extern void set_regrid_condition(LevelData<FArrayBox> &a_condition,
                                  const RealVect &a_dx,
                                  const PoissonParameters &a_params);
 
-extern void set_m_value(Real &m, const Real &phi_here,
+extern Real get_m(const Real &phi_here,
                         const PoissonParameters &a_params,
                         const Real constant_K);
 

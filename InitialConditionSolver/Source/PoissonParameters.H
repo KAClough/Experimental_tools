@@ -55,15 +55,19 @@ class PoissonParameters
     Real G_Newton;
     Real phi_amplitude;
     Real phi_mu;
-  Real phi_wavelength;
+    Real phi_wavelength;
     Real bh1_bare_mass;
     Real bh2_bare_mass;
     Real bh1_spin;
     Real bh2_spin;
-    Real bh1_momentum;
-    Real bh2_momentum;
-    Real bh1_offset;
-    Real bh2_offset;
+    Real bh1_momentum_x;
+    Real bh1_momentum_y;
+    Real bh2_momentum_x;
+    Real bh2_momentum_y;
+    Real bh1_offset_x;
+    Real bh1_offset_y;
+    Real bh2_offset_x;
+    Real bh2_offset_y;
 };
 
 /// get stuff from input file

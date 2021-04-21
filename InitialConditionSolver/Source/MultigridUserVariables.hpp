@@ -9,7 +9,7 @@
 // assign an enum to each variable
 enum
 {
-    c_psi,
+    c_psi_reg,
 
     c_A11_0,
     c_A12_0,
@@ -27,7 +27,7 @@ enum
 namespace MultigridUserVariables
 {
 static constexpr char const *variable_names[NUM_MULTIGRID_VARS] = {
-    "psi",
+    "psi_reg",
 
     "A11_0", "A12_0", "A13_0", "A22_0", "A23_0", "A33_0",
 

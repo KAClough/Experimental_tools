@@ -11,9 +11,10 @@
 // Get the bh radius - input loc_bh should be location on the grid relative
 // to the centre - note that it gets corrected to the actual location
 // (see examples below)
-Real get_bh_radius(RealVect &loc_bh, const Real bh_x_offset)
+Real get_bh_radius(RealVect &loc_bh, const Real bh_x_offset, const Real bh_y_offset)
 {
     loc_bh[0] -= bh_x_offset;
+    loc_bh[1] -= bh_y_offset;
     return sqrt(loc_bh[0] * loc_bh[0] + loc_bh[1] * loc_bh[1] +
                 loc_bh[2] * loc_bh[2]);
 }
@@ -51,7 +52,6 @@ Real get_Aij(const int i, const int j, const Real &rbh1, const Real &rbh2,
                        n2[l] * J2[k];
         }
     }
-
     return Aij;
 }
 
@@ -60,19 +60,20 @@ void set_binary_bh_Aij(FArrayBox &multigrid_vars_box, const IntVect &iv,
 {
     // set the BH values - location
     RealVect loc_bh1 = loc;
-    Real rbh1 = get_bh_radius(loc_bh1, a_params.bh1_offset);
+    Real rbh1 = get_bh_radius(loc_bh1, a_params.bh1_offset_x, a_params.bh1_offset_y);
 
     RealVect loc_bh2 = loc;
-    Real rbh2 = get_bh_radius(loc_bh2, a_params.bh2_offset);
+    Real rbh2 = get_bh_radius(loc_bh2, a_params.bh2_offset_x, a_params.bh2_offset_y);
 
     RealVect n1 = {loc_bh1[0] / rbh1, loc_bh1[1] / rbh1, loc_bh1[2] / rbh1};
     RealVect n2 = {loc_bh2[0] / rbh2, loc_bh2[1] / rbh2, loc_bh2[2] / rbh2};
 
     // the Bowen York params
+    // for now assume all spin normal to plane of rotation
     RealVect J1 = {0.0, 0.0, a_params.bh1_spin};
     RealVect J2 = {0.0, 0.0, a_params.bh2_spin};
-    RealVect P1 = {0.0, a_params.bh1_momentum, 0.0};
-    RealVect P2 = {0.0, a_params.bh2_momentum, 0.0};
+    RealVect P1 = {a_params.bh1_momentum_x, a_params.bh1_momentum_y, 0.0};
+    RealVect P2 = {a_params.bh2_momentum_x, a_params.bh2_momentum_y, 0.0};
 
     // set the Aij vars
     multigrid_vars_box(iv, c_A11_0) =
@@ -89,7 +90,7 @@ void set_binary_bh_Aij(FArrayBox &multigrid_vars_box, const IntVect &iv,
         get_Aij(1, 2, rbh1, rbh2, n1, n2, J1, J2, P1, P2, a_params);
 }
 
-Real set_binary_bh_psi(const RealVect &loc, const PoissonParameters &a_params)
+Real get_psi_brill_lindquist(const RealVect &loc, const PoissonParameters &a_params)
 {
     // the Bowen York params
     Real m1 = a_params.bh1_bare_mass;
@@ -97,12 +98,12 @@ Real set_binary_bh_psi(const RealVect &loc, const PoissonParameters &a_params)
 
     // set the BH values - location
     RealVect loc_bh1 = loc;
-    Real rbh1 = get_bh_radius(loc_bh1, a_params.bh1_offset);
+    Real rbh1 = get_bh_radius(loc_bh1, a_params.bh1_offset_x, a_params.bh1_offset_y);
 
     RealVect loc_bh2 = loc;
-    Real rbh2 = get_bh_radius(loc_bh2, a_params.bh2_offset);
+    Real rbh2 = get_bh_radius(loc_bh2, a_params.bh2_offset_x, a_params.bh2_offset_y);
 
-    return m1 / rbh1 + m2 / rbh2;
+    return 0.5 * (m1 / rbh1 + m2 / rbh2);
 }
 
 #endif /* SETBINARYBH_HPP */
